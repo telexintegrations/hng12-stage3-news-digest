@@ -5,11 +5,9 @@ import logging
 from api.core.config import Config
 
 NEWS_API_URL = "https://newsapi.org/v2/top-headlines"
-CATEGORIES = ["business", "technology", "sports", "health", "entertainment"]
 
-# logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-logger.info("Starting")
 
 def fetch_latest_news(category: str):
     params = {
@@ -113,7 +111,7 @@ def send_news_digest_to_telex(news_articles: list):
         "message": str(message), 
         "event_name": "News Flash",
         "status": "success",
-        "username": "gerald"
+        "username": "Gerald - The News Digest bot "
     }
     
     response = requests.post(
@@ -130,17 +128,17 @@ def send_news_digest_to_telex(news_articles: list):
     else:
         logger.info(f"Failed to send news digest to Telex. Status code: {response.status_code}",)
 
-def generate_news_digest():
+def generate_news_digest(categories: list[str]):
     all_articles = []
-    for category in CATEGORIES:
+    for category in categories:
         news_data = fetch_latest_news(category)
         if news_data.get("status") == "ok":
             all_articles.extend(news_data.get("articles", []))
 
     send_news_digest_to_telex(all_articles)
-
-def send_news_digest():
-    digest_thread = threading.Thread(target=generate_news_digest)
-    digest_thread.start()
-    digest_thread.join()
     logger.info("Completed news digest generation and sent to Telex.")
+
+def send_news_digest(categories: list[str]):
+    digest_thread = threading.Thread(target=generate_news_digest, args=(categories,))
+    digest_thread.start()
+    logger.info("News digest generation started in the background.")

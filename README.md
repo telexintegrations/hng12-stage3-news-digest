@@ -51,19 +51,38 @@ This project is a FastAPI-based web service that fetches the latest news article
 
 2. **Trigger News Digest Generation**:
 
-   To initiate the news digest generation process, send a GET request to the `/news-digest` endpoint:
+   To initiate the news digest generation process, send a GET request to the `/api/v1/news-digest/tick` endpoint:
 
    ```bash
-   curl -X GET "http://127.0.0.1:8000/news-digest"
+      curl -X 'GET' 'http://localhost:8000/api/v1/news_digest/tick' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"settings": [{"label": "categories", "default": ["business", "tech", "sports"]}]}'
    ```
 
    This will start the background task to fetch, summarize, and send the news digest.
 
 ## API Endpoints
 
-- **GET**`/news-digest`: Initiates the background process of fetching, summarizing, and sending the news digest.
+### **GET** `/api/v1/news-digest`
 
-- **GET**`/current_news?category=str`: Retrive news on a particoer category default is technology. Categories avilable are "business", "technology", "sports", "health" and "entertainment".
+This endpoint is used to initiate the background process of fetching, summarizing, and sending the news digest. The process runs in the background and is triggered by the request.
+
+#### **Arguments (Request Body)**
+
+The request requires a JSON payload containing the settings to generate the news digest. The key setting expected is `categories`.
+
+##### Example Request Body
+
+```json
+{
+  "settings": [
+    {
+      "label": "categories",
+      "default": ["business", "tech", "sports"]
+    }
+  ]
+}
+```
+
+### **GET**`/api/v1/current_news?category=str`: Retrive news on a particoer category default is technology. Categories avilable are "business", "technology", "sports", "health" and "entertainment"
 
 ## Configuration
 
