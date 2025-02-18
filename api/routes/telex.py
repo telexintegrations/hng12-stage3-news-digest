@@ -32,7 +32,7 @@ async def get_integration_json(request: Request):
                 "Uses AI summarization for digest generation",
                 "Sends digest to Telex channels"
             ],
-            "category": "Communication & Collaboration",
+            "integration_category": "Communication & Collaboration",
             "author": "Ayobamidele Ewetuga",
             "website": base_url,
             "settings": [
