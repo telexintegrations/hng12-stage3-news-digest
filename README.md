@@ -51,7 +51,7 @@ This project is a FastAPI-based web service that fetches the latest news article
 
 2. **Trigger News Digest Generation**:
 
-   To initiate the news digest generation process, send a GET request to the `/api/v1/news-digest/tick` endpoint:
+   To initiate the news digest generation process, send a POST request to the `/api/v1/news-digest/tick` endpoint:
 
    ```bash
       curl -X 'GET' 'http://localhost:8000/api/v1/news_digest/tick' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"settings": [{"label": "categories", "default": ["business", "tech", "sports"]}]}'

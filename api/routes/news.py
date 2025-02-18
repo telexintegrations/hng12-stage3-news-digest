@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-@news_router.get("/tick")
+@news_router.post("/tick")
 async def trigger_news_digest(background_tasks: BackgroundTasks, payload: dict):
     """
     Telex calls this endpoint at the specified cron interval to trigger the news digest.
