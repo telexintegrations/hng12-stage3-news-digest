@@ -25,7 +25,7 @@ async def get_integration_json(request: Request):
                 "app_url": base_url,
                 "background_color": "#fff"
             },
-            "is_active": False,
+            "is_active": True,
             "integration_type": "interval",
             "key_features": [
                 "Fetches news from multiple categories",
