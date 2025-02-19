@@ -46,7 +46,7 @@ async def get_integration_json(request: Request):
                     "label": "interval",
                     "type": "text",
                     "required": True,
-                    "default": "0 */6 * * * "
+                    "default": "*/15 * * * *"
                 }
             ],
             "target_url": "",
