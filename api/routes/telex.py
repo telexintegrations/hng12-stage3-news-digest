@@ -21,7 +21,7 @@ async def get_integration_json(request: Request):
             "descriptions": {
                 "app_name": "News Digest",
                 "app_description": "An automated news digest service that fetches and summarizes news articles from multiple sources, then sends the digest to Telex.",
-                "app_logo": "https://raw.githubusercontent.com/Ayobamidele/hng12-stage3-news-digest/refs/heads/main/assets/news_digest.jpg",
+                "app_logo": "https://ucarecdn.com/ca598933-5ebc-49c8-a338-d7fef3bed1df/news_digest.jpg",
                 "app_url": base_url,
                 "background_color": "#fff"
             },
