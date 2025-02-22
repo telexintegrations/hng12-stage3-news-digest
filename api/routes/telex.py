@@ -1,7 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
-import logging
-from api.core.config import Config
-from api.services.news import generate_news_digest
+from fastapi import APIRouter, Request
 
 telex_router = APIRouter(prefix="/telex", tags=['Telex'])
 
@@ -16,7 +13,7 @@ async def get_integration_json(request: Request):
         "data": {
             "date": {
                 "created_at": "2025-02-18",
-                "updated_at": "2025-02-18"
+                "updated_at": "2025-02-22"
             },
             "descriptions": {
                 "app_name": "News Digest",
@@ -35,18 +32,19 @@ async def get_integration_json(request: Request):
             "integration_category": "Communication & Collaboration",
             "author": "Ayobamidele Ewetuga",
             "website": base_url,
-            "settings": [
-                {
+            "settings": [                   
+                 {
                     "label": "categories",
-                    "type": "text",
-                    "required": True,
-                    "default": "business,technology,sports,health,entertainment"
+                    "type": "multi-select",
+                    "description": "select categories to filter trending news",
+                    "options": ["business","technology","sports","health","entertainment"],
+                    "default": ["technology", "business"]
                 },
                 {
                     "label": "interval",
                     "type": "text",
                     "required": True,
-                    "default": "*/15 * * * *"
+                    "default": "* */6 * * *"
                 }
             ],
             "target_url": "",

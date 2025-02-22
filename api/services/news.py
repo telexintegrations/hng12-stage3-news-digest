@@ -38,16 +38,18 @@ def retrieve_ai_summarizer(articles):
             - `date`: The publication date of the article.
 
         2. **Output Requirements**:
-            - **Title**: Create a catchy and engaging title that encapsulates the main idea of the summarized articles.
-            - **Article Body**: Write a concise summary that:
+            - Title: Create a catchy and engaging title that encapsulates the main idea of the summarized articles and make sure it is bold.
+            - Article Body: Write a concise summary that:
                 - Integrates key points from all provided articles.
                 - Maintains a logical flow and coherent narrative.
                 - Uses clear and engaging language suitable for a general audience.
-            - **References**: At the end of your article, include a reference section that lists all the articles mentioned in the summary. Each reference should include the title, source, and date of publication.
+                - Uses bulletpoints and lists to help get the mainpoint
+            - **References**: At the end of your article, include a reference section that lists all the articles mentioned in the summary. Each reference should include the title, source, date of publication and links to the referencs inside 🔗[<link>].
 
         3. **Formatting**:
             - Use headings and bullet points where necessary for clarity.
-            - Ensure that the references are formatted consistently.
+            - Ensure that the references are formatted consistently with links to referencs inside 🔗[].
+            - Ensure the heading is bold and paragraphs are engaginf
 
         **Example Input**:
         ```json
