@@ -131,13 +131,13 @@ def send_news_digest_to_telex(news_articles: list):
         logger.info(f"Failed to send news digest to Telex. Status code: {response.status_code}",)
 
 def generate_news_digest(categories: list[str]):
-    all_articles = []
     for category in categories:
+        all_articles = []
         news_data = fetch_latest_news(category)
         if news_data.get("status") == "ok":
             all_articles.extend(news_data.get("articles", []))
+        send_news_digest_to_telex(all_articles)
 
-    send_news_digest_to_telex(all_articles)
     logger.info("Completed news digest generation and sent to Telex.")
 
 def send_news_digest(categories: list[str]):
