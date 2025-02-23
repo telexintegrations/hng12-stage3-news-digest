@@ -8,6 +8,7 @@ This project is a FastAPI-based web service that fetches the latest news article
 - **AI Summarization**: Summarizes the fetched news articles into a concise digest.
 - **Background Processing**: Executes news fetching and digest generation in the background to avoid blocking API routes.
 - **Telex Integration**: Sends the generated news digest to the Telex platform.
+- **Integration Endpoint**: Provides an `/api/v1/integration.json` endpoint for Telex integration.
 
 ## Installation
 
@@ -32,7 +33,7 @@ This project is a FastAPI-based web service that fetches the latest news article
 
    ```env
    NEWS_API_KEY=your_newsapi_key
-   NEWS_COUNTRY=us by defalut but use any countries ISO 3166-1 alpha-2 code of your choice
+   NEWS_COUNTRY=us by default but use any country's ISO 3166-1 alpha-2 code of your choice
    TELEX_API_URL=https://ping.telex.im/v1/webhooks/
    SUMMARIZER_API_KEY=Gemini_ai_api_key
    ```
@@ -54,7 +55,7 @@ This project is a FastAPI-based web service that fetches the latest news article
    To initiate the news digest generation process, send a POST request to the `/api/v1/news-digest/tick` endpoint:
 
    ```bash
-      curl -X 'GET' 'http://localhost:8000/api/v1/news_digest/tick' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"settings": [{"label": "categories", "default": ["business", "tech", "sports"]}]}'
+   curl -X 'GET' 'http://localhost:8000/api/v1/news_digest/tick' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"settings": [{"label": "categories", "default": ["business", "tech", "sports"]}]}'
    ```
 
    This will start the background task to fetch, summarize, and send the news digest.
@@ -82,7 +83,117 @@ The request requires a JSON payload containing the settings to generate the news
 }
 ```
 
-### **GET**`/api/v1/current_news?category=str`: Retrive news on a particoer category default is technology. Categories avilable are "business", "technology", "sports", "health" and "entertainment"
+### **GET** `/api/v1/current_news?category=<category>`
+
+This endpoint retrieves the latest news articles from a specified category. If no category is provided, it defaults to `business`.
+
+#### **Available Categories:**
+
+- `business`
+- `technology`
+- `sports`
+- `health`
+- `entertainment`
+
+#### **Example Response:**
+
+```json
+{
+  "status_code": 200,
+  "success": true,
+  "message": "Articles fetched successfully",
+  "data": [
+    {
+      "source": {"id": "bbc-news", "name": "BBC News"},
+      "author": "John Doe",
+      "title": "Breaking News Title",
+      "description": "Short description of the news article...",
+      "url": "https://news.example.com/article",
+      "urlToImage": "https://news.example.com/image.jpg",
+      "publishedAt": "2025-02-22T12:00:00Z",
+      "content": "Full news article content..."
+    }
+  ]
+}
+```
+
+### **GET** `/api/v1/integration.json`
+
+This endpoint provides integration details for Telex, including available settings and execution parameters.
+
+#### **Example Response:**
+
+```json
+{
+  "data": {
+    "date": {
+      "created_at": "2025-02-18",
+      "updated_at": "2025-02-22"
+    },
+    "descriptions": {
+      "app_name": "News Digest",
+      "app_description": "An automated news digest service that fetches and summarizes news articles from multiple sources, then sends the digest to Telex.",
+      "app_logo": "https://ucarecdn.com/ca598933-5ebc-49c8-a338-d7fef3bed1df/news_digest.jpg",
+      "app_url": "http://127.0.0.1:8000",
+      "background_color": "#fff"
+    },
+    "is_active": true,
+    "integration_type": "interval",
+    "key_features": [
+      "Fetches news from multiple categories",
+      "Uses AI summarization for digest generation",
+      "Sends digest to Telex channels"
+    ],
+    "integration_category": "Communication & Collaboration",
+    "author": "Ayobamidele Ewetuga",
+    "website": "http://127.0.0.1:8000",
+    "settings": [
+      {
+        "label": "categories",
+        "type": "multi-select",
+        "description": "Select categories to filter trending news",
+        "options": ["business", "technology", "sports", "health", "entertainment"],
+        "default": ["technology", "business"]
+      },
+      {
+        "label": "interval",
+        "type": "text",
+        "required": true,
+        "default": "* */6 * * *"
+      }
+    ],
+    "target_url": "",
+    "tick_url": "http://127.0.0.1:8000/api/v1/news_digest/tick"
+  }
+}
+```
+
+### **POST** `/api/v1/news_digest/tick`
+
+This endpoint is triggered by Telex at a specified cron interval to generate the news digest.
+
+#### **Example Request Body:**
+
+```json
+{
+  "settings": [
+    {
+      "label": "categories",
+      "default": ["business", "technology"]
+    }
+  ]
+}
+```
+
+#### **Example Response:**
+
+```json
+{
+  "status_code": 200,
+  "success": true,
+  "message": "News digest generation initiated."
+}
+```
 
 ## Configuration
 
